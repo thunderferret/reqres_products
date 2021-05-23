@@ -34,6 +34,7 @@ phases:
       - echo Pushing the Docker image...
       - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$_PROJECT_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION
       - echo connect kubectl
+      - $(aws eks get-login --no-include-email --region $AWS_DEFAULT_REGION)
       - kubectl config set-cluster k8s --server="$KUBE_URL" --insecure-skip-tls-verify=true
       - kubectl config set-credentials admin --token="$KUBE_TOKEN"
       - kubectl config set-context default --cluster=k8s --user=admin
